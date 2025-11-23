@@ -1,4 +1,13 @@
+  <?php include_once 'db-connect.php'; ?>
 
+  <?php 
+
+    $query = "SELECT * FROM `user`";
+    $result = $mysqli->query($query);
+    
+    $num_results = $result->num_rows;
+    
+  ?>
   <!-- Navber link -->
   <?php include_once 'header.php'; ?>
 
@@ -32,65 +41,67 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">user list</h3>
+                <a class="btn btn-success btn-sm float-right" href="add-user.php">Add New</a>
               </div>
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Username</th>
                     <th>Name</th>
                     <th>E-mail</th>
                     <th>Mobile Number</th>
+                    <th>Status</th>
+                    <th>Created</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>manjur08</td>
-                    <td>Manjurul Hasan</td>
-                    <td>manjurulhasan387@gmail.com</td>
-                    <td>+01859483452</td>
-                    <td><a href="" class="btn btn-outline-primary btn-sm"><i class="far fa-edit"></i> Edit</a>
-                      <a href="" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</a></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>manjur08</td>
-                    <td>Manjurul Hasan</td>
-                    <td>manjurulhasan387@gmail.com</td>
-                    <td>+01859483452</td>
-                    <td><a href="" class="btn btn-outline-primary btn-sm"><i class="far fa-edit"></i>Edit</a>
-                      <a href="" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i>Delete</a></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>manjur08</td>
-                    <td>Manjurul Hasan</td>
-                    <td>manjurulhasan387@gmail.com</td>
-                    <td>+01859483452</td>
-                    <td><a href="" class="btn btn-outline-primary btn-sm"><i class="far fa-edit"></i>Edit</a>
-                      <a href="" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i>Delete</a></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>manjur08</td>
-                    <td>Manjurul Hasan</td>
-                    <td>manjurulhasan387@gmail.com</td>
-                    <td>+01859483452</td>
-                    <td><a href="" class="btn btn-outline-primary btn-sm"><i class="far fa-edit"></i>Edit</a>
-                      <a href="" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i>Delete</a></td>
-                  </tr>
-                  
+                  <?php
+                    if ($num_results > 0) {
+                      while( $row = $result->fetch_assoc() ){
+                        extract($row);
+                  ?>
+                    <tr>
+                      <td><?php echo $id; ?></td>
+                      <td><?php echo $name; ?></td>
+                      <td> <?php echo $email; ?></td>
+                      <td><?php echo $mobile; ?></td>
+                      <td>
+                        <?php
+                          $status = ($status == 1) ? 'Active': 'InActive' ; 
+                          $bg_color = ($status == 1) ? 'success': 'danger' ; 
+                        ?>
+                        <span class="badge bg-<?php echo $bg_color; ?>"><?php echo $status; ?></span>
+                      </td>
+                      <td>
+                        <?php 
+                          // echo $created_at; // March 10, 2001
+                          $date = date_create($create_at);
+                          echo date_format($date,"M d, Y"); 
+                          ?>
+                        <!-- March 10, 2001 -->
+                      </td>
+                      <td>
+                        <a href="" class="btn btn-outline-primary btn-sm"><i class="far fa-edit"></i> Edit</a>
+                        <a href="" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i> Del</a>
+                      </td>
+                    </tr>
+                  <?php
+                      }
+                    } //else {
+                      //echo "No records found!@";
+                    //}
+                  ?>
                   </tbody>
                   <tfoot>
                   <tr>
                     <th>ID</th>
-                    <th>Username</th>
                     <th>Name</th>
                     <th>E-mail</th>
                     <th>Mobile Number</th>
+                    <th>Status</th>
+                    <th>Created</th>
                     <th>Action</th>
                   </tr>
                   </tfoot>
