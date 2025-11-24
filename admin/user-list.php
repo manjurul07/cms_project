@@ -69,10 +69,10 @@
                       <td><?php echo $mobile; ?></td>
                       <td>
                         <?php
-                          $status = ($status == 1) ? 'Active': 'InActive' ; 
-                          $bg_color = ($status == 1) ? 'success': 'danger' ; 
+                          $status_text = ($status == 1) ? 'Active': 'InActive' ; 
+                          $bg_color = ($status == 1) ? 'success' : 'danger'; 
                         ?>
-                        <span class="badge bg-<?php echo $bg_color; ?>"><?php echo $status; ?></span>
+                        <span class="badge bg-<?php echo $bg_color; ?>"><?php echo $status_text; ?></span>
                       </td>
                       <td>
                         <?php 
@@ -84,7 +84,7 @@
                       </td>
                       <td>
                         <a href="" class="btn btn-outline-primary btn-sm"><i class="far fa-edit"></i> Edit</a>
-                        <a href="" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i> Del</a>
+                        <a href="" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i> Delete</a>
                       </td>
                     </tr>
                   <?php

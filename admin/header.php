@@ -42,7 +42,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" data-widget="signout" href="#" role="button">
+        <a class="nav-link" data-widget="signout" href="index.php" role="button">
           <i class="fas fa-sign-out-alt"></i>
         </a>
       </li>
