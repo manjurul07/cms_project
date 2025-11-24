@@ -1,17 +1,36 @@
-<?php 
-
+<?php
+include "db-connect.php";
 
 if (isset($_POST['login'])) {
-	
-	include_once 'db-connect.php';
 
-	$_SESSION['email'] = $_POST['email'];
-	$_SESSION['password'] = $_POST['password'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
+    $sql = "SELECT * FROM user WHERE email = '$email'";
+    $result = mysqli_query($mysqli, $sql);
 
+    if (mysqli_num_rows($result) == 1) {
 
+        $user = mysqli_fetch_assoc($result);
+
+        if ($password == $user['password']) {
+
+            session_start();
+            $_SESSION['email']   = $user['email'];
+            $_SESSION['password'] = $user['password'];
+
+            header("Location: dashboard.php");
+            exit;
+
+        } else {
+            $error = "Wrong Password";
+        }
+
+    } else {
+        $error = "Email Not Found";
+    }
 }
- ?>
+?>
 
 
 
@@ -39,9 +58,23 @@ if (isset($_POST['login'])) {
       <a href="../../index2.html" class="h1"><b>Power Clean</b></a>
     </div>
     <div class="card-body">
+            <div class="mb-3 col-12">
+          <?php
+                   if (isset($error)) {
+                  ?>
+                  <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-danger"></i> Alert!</h5>
+                    <?php echo $error; ?>
+                  </div>
+                  <?php
+                   }
+
+                  ?>
+        </div>
       <p class="login-box-msg">Login to your site </p>
 
-      <form action="dashboard.php" method="POST">
+      <form action="" method="POST">
         <div class="input-group mb-3">
           <input type="email" class="form-control" placeholder="Email" name="email">
           <div class="input-group-append">
@@ -62,7 +95,6 @@ if (isset($_POST['login'])) {
           <div class="col-12 float-right">
             <button type="submit" class="btn btn-primary btn-block" name="login">Log in</button>
           </div>
-
         </div>
       </form>
     </div>
